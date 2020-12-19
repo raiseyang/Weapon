@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.raise.weapon_base">
+
+    <application>
+        <meta-data
+            android:name="COMPILE_TIME_WEAPON_BASE"
+            android:value="${COMPILE_TIME_WEAPON_BASE}" />
+        <provider
+            android:name="com.raise.weapon_base.WeaponContextProvider"
+            android:authorities="${applicationId}.weaponcontextprovider"
+            android:exported="false" />
+    </application>
+</manifest>

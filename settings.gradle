@@ -1,2 +1,3 @@
+include ':weapon-base'
 include ':app'
 rootProject.name = "Weapon"

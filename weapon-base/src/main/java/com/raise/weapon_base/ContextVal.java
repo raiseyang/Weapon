@@ -3,15 +3,13 @@ package com.raise.weapon_base;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
 /**
  * context持有者
  * 使用：{@link ContextVal#getContext()}
  */
 public class ContextVal {
 
-    public static final String ACTION_APP_BOOT_COMPLETED = "com.abupdate.common.action.app.boot.completed";
+    public static final String ACTION_APP_BOOT_COMPLETED = "com.raise.common.action.app.boot.completed";
 
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;
@@ -20,7 +18,7 @@ public class ContextVal {
         sContext = context;
     }
 
-    public static @NonNull
+    public static
     Context getContext() {
         return sContext;
     }

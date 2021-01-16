@@ -24,6 +24,9 @@ public class SPFUtil {
      * 兼容刚开机时，用户锁问题
      */
     private static SharedPreferences getSharedPreferences() {
+        if (ContextVal.getContext() == null) {
+            throw new NullPointerException("Should invoke ContextVal.setContext() on Application.OnCreate() in multi-process");
+        }
         if (Build.VERSION.SDK_INT < 24 || isUserUnlocked) {
             return ContextVal.getContext().getSharedPreferences(
                     s_sp_file_name, Context.MODE_PRIVATE);

@@ -17,7 +17,9 @@ public class WeaponContextProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         ContextVal.setContext(getContext());
-        ContextVal.getContext().sendBroadcast(new Intent(ContextVal.ACTION_APP_BOOT_COMPLETED));
+        Intent intent = new Intent(ContextVal.ACTION_APP_BOOT_COMPLETED);
+        intent.setPackage(getContext().getPackageName());
+        ContextVal.getContext().sendBroadcast(intent);
         return false;
     }
 

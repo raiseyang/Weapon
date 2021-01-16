@@ -33,6 +33,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
 /**
  * How to use.
  * LLog.d(TAG, " d");
@@ -81,9 +82,6 @@ public class LLog {
         s_write_file = true;
         s_file_backup_count = 2;
         s_global_tag = "weapon";
-        String fileName = "weapon_log.txt";
-        s_log_path = getDefaultFolder() + File.separator + fileName;
-        s_log_size = Math.max(getLogSize(), 500);
 
         // handlerThread不需要end()
         mHandlerThread = ListenerHandlerThread.create("LLog", false);
@@ -151,7 +149,7 @@ public class LLog {
     /**
      * 设置日志保存路径
      *
-     * @param absolutePath /sdcard/abupdate.log
+     * @param absolutePath /sdcard/xxx.log
      */
     public static void setLogAbsolutePath(@NonNull String absolutePath) {
         LLog.s_log_path = absolutePath;
@@ -166,6 +164,10 @@ public class LLog {
 
     public static void setFileBackupCount(int count) {
         s_file_backup_count = count;
+    }
+
+    private static void setDefaultLogPath() {
+        s_log_path = getDefaultFolder() + File.separator + "weapon_log.txt";
     }
 
     public static void v(String tag, String msg) {
@@ -387,7 +389,13 @@ public class LLog {
     }
 
     private static boolean check_log_file() {
+        if (s_log_path == null) {
+            setDefaultLogPath();
+        }
         File log_file = new File(s_log_path);
+        if (s_log_size == 0) {
+            s_log_size = Math.max(getLogSize(), 500);
+        }
         // 日志文件备份
         if (log_file.exists()
                 && log_file.length() > 1024 * s_log_size
@@ -446,6 +454,9 @@ public class LLog {
 
         int versionCode = 0;
         Context context = ContextVal.getContext();
+        if (context == null) {
+            throw new NullPointerException("Should invoke ContextVal.setContext() on Application.OnCreate() in multi-process");
+        }
         try {
             versionCode = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
         } catch (Exception e) {
@@ -509,6 +520,9 @@ public class LLog {
 
     private static String getDefaultFolder() {
         Context context = ContextVal.getContext();
+        if (context == null) {
+            throw new NullPointerException("Should invoke ContextVal.setContext() on Application.OnCreate() in multi-process");
+        }
         String path;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             //sd卡挂载

@@ -8,6 +8,7 @@ import android.os.UserManager;
 import androidx.annotation.NonNull;
 
 /**
+ * SharedPreferences工具类
  * Created by raise.yang on 19/07/17.
  */
 public class SPFUtil {

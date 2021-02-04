@@ -9,7 +9,7 @@ import android.content.Context;
  */
 public class ContextVal {
 
-    public static final String ACTION_APP_BOOT_COMPLETED = "com.raise.common.action.app.boot.completed";
+    public static final String ACTION_APP_BOOT_COMPLETED = "com.raise.weapon.action.app.boot.completed";
 
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;

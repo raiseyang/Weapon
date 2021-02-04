@@ -21,7 +21,7 @@ public class UIThreadUtil {
      * 当前线程是否是 UI 线程
      */
     public static boolean isMainThread() {
-        return Looper.getMainLooper().getThread() == Thread.currentThread();
+        return Looper.getMainLooper() == Looper.myLooper();
     }
 
     /**

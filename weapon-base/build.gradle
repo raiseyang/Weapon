@@ -3,16 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "0.0.$versionCode"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -58,8 +55,6 @@ android {
 
 dependencies {
     implementation "androidx.annotation:annotation:$annotation_version"
-
-    testImplementation "junit:junit:$junit_version"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+
+apply from: 'bintray.gradle'

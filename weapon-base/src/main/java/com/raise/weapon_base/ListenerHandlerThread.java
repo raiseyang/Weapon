@@ -12,7 +12,7 @@ import android.util.Log;
  * 3. 注意：回调完成，需要调用end()结束该HandlerThread
  * 使用方法:
  * <code>
- * mHandlerThread = ListenerHandlerThread.create("common_download", false);
+ * mHandlerThread = ListenerHandlerThread.create("download", false);
  * mHandlerThread.start();
  * mHandlerThread.setUIThread(true);
  * mHandlerThread.post(new Runnable() {})
@@ -59,9 +59,16 @@ public final class ListenerHandlerThread extends HandlerThread {
      * 发送被执行的Runnable
      */
     public void post(final Runnable runnable) {
+        postDelayed(runnable, 0);
+    }
+
+    /**
+     * 发送被执行的Runnable
+     */
+    public void postDelayed(final Runnable runnable, final long timeInMills) {
         if (isUIThread) {
-            UIThreadUtil.post(runnable);
-        }else {
+            UIThreadUtil.post(timeInMills, runnable);
+        } else {
             if (handler == null) {
                 // 等待创建
                 if (isAlive()) {
@@ -74,9 +81,9 @@ public final class ListenerHandlerThread extends HandlerThread {
                     }
                 }
             }
-            if (handler != null){
-                handler.post(runnable);
-            }else {
+            if (handler != null) {
+                handler.postDelayed(runnable, timeInMills);
+            } else {
                 Log.w("ListenerHandlerThread", "post() handler == null,name=" + getName());
             }
         }

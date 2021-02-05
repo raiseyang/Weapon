@@ -18,6 +18,9 @@ buildscript {
 }
 
 ext {
+    // 版本发布时修改
+    weapon_version = "0.0.2"
+    
     junit_version = "4.12"
     annotation_version = "1.1.0"
 
@@ -43,3 +46,4 @@ task jcenterPublish {
 }
 
 jcenterPublish.finalizedBy("weapon-base:install", "weapon-base:bintrayUpload")
+jcenterPublish.finalizedBy("weapon-base-kt:install", "weapon-base-kt:bintrayUpload")

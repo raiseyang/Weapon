@@ -1,3 +1,4 @@
+include ':weapon-ui'
 include ':weapon-base-kt'
 include ':weapon-base'
 include ':app'

@@ -106,10 +106,13 @@ public class FileUtil {
         }
     }
 
-    public static boolean writeFile(File file, String content) {
+    /**
+     * 向给定文件内写入字符串
+     */
+    public static boolean writeFile(File file, String content, boolean append) {
         OutputStream os = null;
         try {
-            os = new FileOutputStream(file);
+            os = new FileOutputStream(file, append);
             os.write(content.getBytes());
             os.flush();
             return true;
@@ -119,6 +122,13 @@ public class FileUtil {
         } finally {
             closeQuietly(os);
         }
+    }
+
+    /**
+     * 向给定文件内写入字符串(将之前内容清除)
+     */
+    public static boolean writeFile(File file, String content) {
+        return writeFile(file, content, false);
     }
 
     public static void closeQuietly(Closeable... closeables) {

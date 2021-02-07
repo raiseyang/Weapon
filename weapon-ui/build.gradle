@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "0.0.$versionCode"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    "COMPILE_TIME_WEAPON_UI": "${new Date().format("_yyyy.MM.dd'T'HH:mm_")}release"
+            ]
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    "COMPILE_TIME_WEAPON_UI": "${new Date().format("_yyyy.MM.dd'T'HH:mm_")}debug"
+            ]
+        }
+    }
+
+    libraryVariants.all { variant ->
+        // 打印所有属性
+//        println("variant=${variant.getProperties()}")
+//        if (variant.buildType.name == "debug") {
+//            variant.getPackageLibrary().destinationDir = new File(project.rootDir.absolutePath + "/xxx")
+//        }
+
+//        if (variant.buildType.name == 'debug') {
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                //weapon-base-debug-0.0.1.aar
+                outputFileName = "${project.name}-${variant.name}-${variant.mergedFlavor.versionName}.aar"
+            }
+        }
+//        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation "androidx.annotation:annotation:$annotation_version"
+    implementation project(path: ':weapon-base')
+    // https://mvnrepository.com/artifact/com.abupdate.weaponry/common-ui
+//    implementation group: 'com.abupdate.weaponry', name: 'common-ui', version: '2.0.13'
+
+}
+
+apply from: 'bintray.gradle'

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- dialog id-->
+    <id name="vcdialog_layout_root" />
+    <id name="vcdialog_textview_title" />
+
+    <id name="vcdialog_layout_message" />
+    <id name="vcdialog_textview_message" />
+    <id name="vcdialog_listview_message" />
+
+    <id name="vcdialog_layout_buttons" />
+    <id name="vcdialog_button_left" />
+    <id name="vcdialog_button_right" />
+    <id name="vcdialog_button_center" />
+</resources>

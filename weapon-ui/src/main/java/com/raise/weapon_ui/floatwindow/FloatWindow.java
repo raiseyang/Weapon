@@ -1,6 +1,7 @@
 package com.raise.weapon_ui.floatwindow;
 
 
+import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
@@ -12,13 +13,28 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
 
-import com.raise.weapon_base.LLog;
-
 /**
  * 支持管理一个悬浮框
  * 参考：https://gitee.com/1960176680/FloatWindow
+ * 参考：https://blog.csdn.net/big_sea_m/article/details/104611800
  * <p>
  * 8.0及以上需申请权限
+ * 1. 传入的context为AccessibilityService时，可不用申请权限
+ * 申请权限：
+ * <code>
+ * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+ * <code/>
+ * 判断是否有弹窗权限：
+ * <code>
+ * Settings.canDrawOverlays(context);
+ * <code/>
+ * 跳转到申请弹窗权限settings界面
+ * <code>
+ * val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+ * val pkg = "package:${packageName}"
+ * intent.data = Uri.parse(pkg)
+ * startActivityForResult(intent,11)
+ * <code/>
  * how to use:
  * <code>
  * FloatWindow.Builder(this)
@@ -29,7 +45,7 @@ import com.raise.weapon_base.LLog;
  * Created by raise.yang on 20/05/15.
  */
 public class FloatWindow implements IFloatWindow {
-    private static final String TAG = "AbFloatWindow";
+
     private WindowManager windowManager;
     private WindowManager.LayoutParams layoutParams;
     private FloatWindow.Builder mBuilder;
@@ -51,16 +67,12 @@ public class FloatWindow implements IFloatWindow {
         layoutParams.flags = (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
 
-//        if (mBuilder.context instanceof AccessibilityService) {
-//            LLog.i(TAG,"prepareLayoutParams() TYPE_ACCESSIBILITY_OVERLAY");
-//            layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
-//        } else
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LLog.i(TAG, "prepareLayoutParams() TYPE_APPLICATION_OVERLAY");
+        if (mBuilder.context instanceof AccessibilityService) {
+            layoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             //8.0及以上需申请权限
             layoutParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
         } else {
-            LLog.i(TAG, "prepareLayoutParams() TYPE_PHONE");
             layoutParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         }
 

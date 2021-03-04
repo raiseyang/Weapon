@@ -1,4 +1,6 @@
-package com.raise.weapon_base
+package com.raise.weapon_base_kt
+
+import com.raise.weapon_base.Timer
 
 /**
  *  wtimer(

@@ -4,7 +4,7 @@ import android.os.SystemClock
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.raise.weapon_base.LLog
 import com.raise.weapon_base.Timer
-import com.raise.weapon_base.wtimer
+import com.raise.weapon_base_kt.wtimer
 import org.junit.Test
 import org.junit.runner.RunWith
 

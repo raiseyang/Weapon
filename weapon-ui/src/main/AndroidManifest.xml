@@ -3,4 +3,10 @@
     package="com.raise.weapon_ui">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <application>
+        <meta-data
+            android:name="COMPILE_TIME_WEAPON_UI"
+            android:value="${COMPILE_TIME_WEAPON_UI}" />
+    </application>
+
 </manifest>

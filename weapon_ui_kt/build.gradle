@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.library'
+    id 'kotlin-android'
 }
 
 android {
@@ -11,7 +12,7 @@ android {
         versionCode rootProject.ext.weapon_version_code
         versionName rootProject.ext.weapon_version_name
         manifestPlaceholders = [
-                "COMPILE_TIME_WEAPON_UI": "${new Date().format("_yyyy.MM.dd'T'HH:mm_")}release"
+                "COMPILE_TIME_WEAPON_UI_KT": "${new Date().format("_yyyy.MM.dd'T'HH:mm_")}release"
         ]
     }
 
@@ -21,26 +22,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.aar')) {
-                outputFileName = "${project.name}-${variant.name}-${variant.mergedFlavor.versionName}.aar"
-            }
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
-    implementation "androidx.annotation:annotation:$annotation_version"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation project(path: ':weapon-base')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation project(path: ':weapon-ui')
 }
 
 apply from: 'bintray.gradle'

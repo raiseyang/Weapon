@@ -1,3 +1,4 @@
+include ':weapon_ui_kt'
 include ':weapon-ui'
 include ':weapon-base-kt'
 include ':weapon-base'

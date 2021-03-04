@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.raise.weapon_base_kt">
+    package="com.raise.weapon_ui_kt">
 
     <application>
         <meta-data
-            android:name="COMPILE_TIME_WEAPON_BASE_KT"
-            android:value="${COMPILE_TIME_WEAPON_BASE_KT}" />
+            android:name="COMPILE_TIME_WEAPON_UI_KT"
+            android:value="${COMPILE_TIME_WEAPON_UI_KT}" />
     </application>
 </manifest>

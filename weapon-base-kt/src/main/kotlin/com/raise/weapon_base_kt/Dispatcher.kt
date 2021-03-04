@@ -1,6 +1,8 @@
-package com.raise.weapon_base
+package com.raise.weapon_base_kt
 
 import android.os.SystemClock
+import com.raise.weapon_base.Dispatcher
+import com.raise.weapon_base.UIThreadUtil
 
 /**
  * 交给线程池执行异步任务

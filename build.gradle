@@ -19,8 +19,9 @@ buildscript {
 
 ext {
     // 版本发布时修改
-    weapon_version = "0.0.3"
-    
+    weapon_version_code = 4
+    weapon_version_name = "0.0.$weapon_version_code"
+
     junit_version = "4.12"
     annotation_version = "1.1.0"
     appcompat_version = "1.2.0"

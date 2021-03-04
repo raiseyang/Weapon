@@ -1,4 +1,6 @@
-package com.raise.weapon_base
+package com.raise.weapon_base_kt
+
+import com.raise.weapon_base.UIThreadUtil
 
 /**
  * 在主线程中执行

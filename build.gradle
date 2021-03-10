@@ -50,3 +50,4 @@ task jcenterPublish {
 jcenterPublish.finalizedBy("weapon-base:install", "weapon-base:bintrayUpload")
 jcenterPublish.finalizedBy("weapon-base-kt:install", "weapon-base-kt:bintrayUpload")
 jcenterPublish.finalizedBy("weapon-ui:install", "weapon-ui:bintrayUpload")
+jcenterPublish.finalizedBy("weapon-ui-kt:install", "weapon-ui-kt:bintrayUpload")

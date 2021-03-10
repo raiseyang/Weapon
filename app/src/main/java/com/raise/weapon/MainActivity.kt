@@ -6,9 +6,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.raise.weapon_base.LLog
 import com.raise.weapon_base.UIThreadUtil
-import com.raise.weapon_ui.ToastUtil
-import com.raise.weapon_ui.dialog.VcDialog
-import com.raise.weapon_ui.floatwindow.FloatWindow
+import com.raise.weapon_ui_kt.createFloatWindow
+import com.raise.weapon_ui_kt.showVcDialog
+import com.raise.weapon_ui_kt.toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,13 +23,13 @@ class MainActivity : AppCompatActivity() {
 
         btn_2.text = "弹出VcDialog"
         btn_2.setOnClickListener {
-            val dialog = VcDialog.Builder(this)
-                .setTitle("提示")
-                .setMessage("内有恶犬")
-                .setOnCancelListener {
-                    ToastUtil.show("我消失了")
+            val dialog = showVcDialog(this) {
+                setTitle("提示")
+                setMessage("内有恶犬")
+                setOnCancelListener {
+                    toast("我消失了")
                 }
-                .create()
+            }
 
             val title =
                 dialog.rootView.findViewById<TextView>(com.raise.weapon_ui.R.id.vcdialog_textview_title)
@@ -48,14 +48,19 @@ class MainActivity : AppCompatActivity() {
             val button = Button(this)
             button.text = "悬浮按钮1"
             button.setOnClickListener {
-                ToastUtil.show("我是悬浮窗按钮")
+                toast {
+                    val name = "raise"
+                    "${name}消失了"
+                }
             }
 
-            FloatWindow.Builder(this)
-                .setView(button)
-                .create()
-                .show()
-
+            val floatWindow = createFloatWindow(this) {
+                setView(button)
+            }
+            floatWindow.show()
+            UIThreadUtil.post(3000) {
+                floatWindow.hide()
+            }
         }
     }
 }

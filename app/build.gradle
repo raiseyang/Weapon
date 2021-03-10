@@ -43,7 +43,7 @@ dependencies {
     implementation project(path: ':weapon-base')
     implementation project(path: ':weapon-base-kt')
     implementation project(path: ':weapon-ui')
-//    implementation 'com.raiseyang.weapon:weapon-base:0.0.1'
+    implementation project(path: ':weapon-ui-kt')
 
 
     testImplementation "junit:junit:$junit_version"

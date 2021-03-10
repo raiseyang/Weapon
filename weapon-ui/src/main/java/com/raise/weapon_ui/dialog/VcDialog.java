@@ -30,11 +30,17 @@ import com.raise.weapon_ui.R;
  * 1. 必须依附AppCompatActivity使用；service或其他场景，请使用系统dialog.getwindow.settype()解决
  *
  * <p>
- * dialog = new VcDialog.Builder(this)
- * .setMessage(getString(res))
+ * val dialog = VcDialog.Builder(this)
+ * .setTitle("提示")
+ * .setMessage("内有恶犬")
+ * .setOnCancelListener {
+ * ToastUtil.show("我消失了")
+ * }
  * .create()
- * .show();
- * <p>
+ * val title =
+ * dialog.rootView.findViewById<TextView>(com.raise.weapon_ui.R.id.vcdialog_textview_title)
+ * title.text = "修改后的提示"
+ * dialog.show()
  * Created by raise.yang on 17/10/10.
  */
 public class VcDialog extends AppCompatDialogFragment implements IVCDialog {

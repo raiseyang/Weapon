@@ -2,7 +2,7 @@ package com.raise.weapon_base;
 
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.util.Log;
+import android.os.SystemClock;
 
 /**
  * HandlerThread封装类
@@ -49,10 +49,7 @@ public final class ListenerHandlerThread extends HandlerThread {
 
     @Override
     protected void onLooperPrepared() {
-        synchronized (this) {
-            handler = new Handler(getLooper());
-            notify();
-        }
+        handler = new Handler(getLooper());
     }
 
     /**
@@ -69,23 +66,11 @@ public final class ListenerHandlerThread extends HandlerThread {
         if (isUIThread) {
             UIThreadUtil.post(timeInMills, runnable);
         } else {
-            if (handler == null) {
-                // 等待创建
-                if (isAlive()) {
-                    synchronized (this) {
-                        try {
-                            wait(5 * 1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
+            while (handler == null) {
+//                LLog.i("ListenerHandlerThread","postDelayed() handler == null");
+                SystemClock.sleep(100);
             }
-            if (handler != null) {
-                handler.postDelayed(runnable, timeInMills);
-            } else {
-                Log.w("ListenerHandlerThread", "post() handler == null,name=" + getName());
-            }
+            handler.postDelayed(runnable, timeInMills);
         }
     }
 

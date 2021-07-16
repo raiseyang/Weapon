@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -500,7 +501,7 @@ public class LLog {
         String dateStr = sdf.format(new Date());
         return dateStr +
                 " " +
-                String.format("%s ", convertThreadId((int) Thread.currentThread().getId())) +
+                String.format("%s ", convertThreadId(Process.myTid())) +
                 String.format("%s: ", tag) +
                 msg;
     }

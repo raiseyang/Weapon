@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -53,6 +54,7 @@ import javax.xml.transform.stream.StreamSource;
  */
 public class LLog {
 
+    public static final int ANDROID = 0;//该级别的日志不会写入文件，也不会加密，仅用于非研发查看日志
     public static final int VERBOSE = 2;
     public static final int DEBUG = 3;
     public static final int INFO = 4;
@@ -169,6 +171,10 @@ public class LLog {
 
     private static void setDefaultLogPath() {
         s_log_path = getDefaultFolder() + File.separator + "weapon_log.txt";
+    }
+
+    public static void a(String tag, String msg) {
+        println(0, tag, msg);
     }
 
     public static void v(String tag, String msg) {
@@ -313,9 +319,15 @@ public class LLog {
     }
 
     private static void println(int level, String tag, String message) {
-        if (level >= s_level) {//过滤级别
+        if (level == ANDROID) {
+            printAndroidLog(DEBUG, s_global_tag + "/" + tag, message);
+        } else if (level >= s_level) {//过滤级别
             if (s_write_file) {
                 write_log(tag, message);
+            }
+            if (s_is_encrypt){
+                // 加密日志，不会通过Log.d()打印
+                return;
             }
             if (s_show_code_position) {
                 message += getCodePosition();
@@ -393,7 +405,12 @@ public class LLog {
         if (s_log_path == null) {
             setDefaultLogPath();
         }
-        File log_file = new File(s_log_path);
+        final File log_file;
+        if (s_is_encrypt) {
+            log_file = new File(getEncryptPath());
+        } else {
+            log_file = new File(s_log_path);
+        }
         if (s_log_size == 0) {
             s_log_size = Math.max(getLogSize(), 500);
         }
@@ -403,17 +420,17 @@ public class LLog {
                 && !UIThreadUtil.isMainThread()) {
             for (int i = s_file_backup_count; i > 0; i--) {
                 // 需要备份文件，日志文件向后移动
-                File backupFile = new File(String.format("%s(%s)", s_log_path, i));
+                File backupFile = new File(String.format("%s(%s)", log_file.getAbsolutePath(), i));
                 if (!backupFile.exists()) continue;
                 if (i == s_file_backup_count) {
                     // 最末尾的日志文件，直接放弃
                     backupFile.delete();
                 } else {
-                    File newBackupFile = new File(String.format("%s(%s)", s_log_path, i + 1));
+                    File newBackupFile = new File(String.format("%s(%s)", log_file.getAbsolutePath(), i + 1));
                     backupFile.renameTo(newBackupFile);
                 }
             }
-            boolean renameTo = log_file.renameTo(new File(s_log_path + "(1)"));
+            boolean renameTo = log_file.renameTo(new File(log_file.getAbsolutePath() + "(1)"));
             Log.w("LLog", "The log file was backup:" + renameTo);
         }
 
@@ -438,16 +455,23 @@ public class LLog {
                 Log.e("LLog", getStackLLogString(e));
                 return false;
             } finally {
-                if (fos != null) {
-                    try {
-                        fos.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                FileUtil.closeQuietly(fos);
             }
         }
         return true;
+    }
+
+    /**
+     * 用 ^ 算法加密日志
+     */
+    private static byte[] encryptContent(byte[] contentBytes) {
+        byte[] encryptBytes = new byte[contentBytes.length];
+        for (int i = 0; i < contentBytes.length; i++) {
+            byte v1 = contentBytes[i];
+            byte convertByte = (byte) ((byte) v1 ^ 0xFF);
+            encryptBytes[i] = convertByte;
+        }
+        return encryptBytes;
     }
 
     private static String getFirstLineString() {
@@ -477,22 +501,35 @@ public class LLog {
             public void run() {
                 FileOutputStream fos = null;
                 try {
-                    fos = new FileOutputStream(s_log_path, true);
-                    fos.write(text.getBytes());
+                    // 写入数据
+                    if (s_is_encrypt) {
+                        fos = new FileOutputStream(getEncryptPath(), true);
+                        fos.write(encryptContent(text.getBytes(StandardCharsets.UTF_8)));
+                    } else {
+                        fos = new FileOutputStream(s_log_path, true);
+                        fos.write(text.getBytes(StandardCharsets.UTF_8));
+                    }
                     fos.write("\n".getBytes());
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
-                    try {
-                        if (fos != null) {
-                            fos.close();
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    FileUtil.closeQuietly(fos);
                 }
             }
         });
+    }
+
+    /**
+     * 加密文件名称的生成规则
+     */
+    private static String getEncryptPath() {
+        String result;
+        if (s_log_path.contains(".txt")) {
+            result = s_log_path.replace(".txt", ".enc.txt");
+        } else {
+            result = s_log_path + ".enc";
+        }
+        return result;
     }
 
     private static String getFormatLog(String tag, String msg) {

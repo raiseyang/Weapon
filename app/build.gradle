@@ -40,11 +40,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    implementation project(path: ':weapon-base')
+//    implementation project(path: ':weapon-base')
     implementation project(path: ':weapon-base-kt')
     implementation project(path: ':weapon-ui')
     implementation project(path: ':weapon-ui-kt')
 
+    implementation 'com.raise.weapon:base:0.0.4'
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

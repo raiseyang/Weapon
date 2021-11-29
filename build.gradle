@@ -2,6 +2,11 @@
 buildscript {
     ext.kotlin_version = "1.4.21"
     repositories {
+        // 链接本地nexus服务器
+        maven {
+            setAllowInsecureProtocol(true)
+            url "http://localhost:8081/repository/maven2_group_raise/"
+        }
         google()
         jcenter()
     }
@@ -33,6 +38,11 @@ ext {
 
 allprojects {
     repositories {
+        // 链接本地nexus服务器
+        maven {
+            setAllowInsecureProtocol(true)
+            url "http://localhost:8081/repository/maven2_group_raise/"
+        }
         google()
         jcenter()
     }

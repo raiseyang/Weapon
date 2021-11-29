@@ -3,6 +3,7 @@ package com.raise.weapon
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.raise.weapon_base.LLog
+import com.raise.weapon_ui_kt.showVcDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,16 +16,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        LLog.setWriteEncrypt(true)
-
-        btn_2.text = "弹出VcDialog"
+        btn_2.text = "btn_2"
         btn_2.setOnClickListener {
-
+            val showVcDialog = showVcDialog(this, false) {
+                setMessage("登录中")
+                setCancelable(false)
+            }
+                .cancelableByBackKey(false)
+                .show()
         }
 
-        btn_1.text = "弹出FloatWindow"
+        btn_1.text = "btn_1"
         btn_1.setOnClickListener {
-            LLog.d(TAG, "onCreate()111 ")
+            val showVcDialog = showVcDialog(this, false) {
+                setMessage("登录中")
+                setCancelable(true)
+            }
+
+            showVcDialog.show()
+            LLog.d("MainActivity","hello")
         }
     }
 }

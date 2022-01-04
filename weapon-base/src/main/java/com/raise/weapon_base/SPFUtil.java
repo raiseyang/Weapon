@@ -35,6 +35,8 @@ public class SPFUtil {
             UserManager userManager = (UserManager) ContextVal.getContext().getSystemService(Context.USER_SERVICE);
             if (userManager.isUserUnlocked()) {
                 isUserUnlocked = true;
+                return ContextVal.getContext().getSharedPreferences(
+                        s_sp_file_name, Context.MODE_PRIVATE);
             }
             ContextVal.getContext().createDeviceProtectedStorageContext();
             return ContextVal.getContext().createDeviceProtectedStorageContext().getSharedPreferences(
@@ -117,5 +119,11 @@ public class SPFUtil {
     @NonNull
     public static String getString(@NonNull String key, @NonNull String defValue) {
         return getSharedPreferences().getString(key, defValue);
+    }
+
+    public static void remove(String key){
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.remove(key);
+        editor.apply();
     }
 }

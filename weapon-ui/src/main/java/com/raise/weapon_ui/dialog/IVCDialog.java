@@ -17,6 +17,11 @@ public interface IVCDialog {
     IVCDialog show();
 
     /**
+     * 是否可以点击[back]按键取消dialog
+     */
+    IVCDialog cancelableByBackKey(boolean cancelable);
+
+    /**
      * 获取原来的dialog实例，方便调用未公开的接口，比如cancel()
      */
     Dialog getRawDialog();

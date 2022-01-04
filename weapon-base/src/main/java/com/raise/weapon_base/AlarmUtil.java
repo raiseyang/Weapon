@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
+import android.os.Bundle;
 
 
 /**
@@ -43,19 +45,33 @@ public class AlarmUtil {
      * @param action       闹钟响起时，通知的广播action
      */
     public static void setRepeatAlarm(long startTime, long intervalTime, int id, String action) {
+        setRepeatAlarm(startTime, intervalTime, id, action, null);
+    }
+
+    public static void setRepeatAlarm(long startTime, long intervalTime, int id, String action, Bundle bundle) {
         String proxyAction = PROXY_BROADCAST_PREFIX + action;
         Intent intent = new Intent(proxyAction);
         intent.setPackage(AppInfoUtil.getPackageName());
         intent.putExtra("intervalTime", intervalTime);
         intent.putExtra("id", id);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ContextVal.getContext(), id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         registerProxyReceiver(proxyAction);
         setAlarm(startTime, pendingIntent);
     }
 
     public static void setOnceAlarm(long startTime, int id, String action) {
+        setOnceAlarm(startTime, id, action, null);
+    }
+
+    public static void setOnceAlarm(long startTime, int id, String action, Bundle bundle) {
         Intent intent = new Intent(action);
         intent.putExtra("id", id);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
         //安卓8.0以上,自定义广播需要指定包名
         intent.setPackage(AppInfoUtil.getPackageName());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ContextVal.getContext(), id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -71,12 +87,21 @@ public class AlarmUtil {
         am.cancel(broadcast);
     }
 
+    public static void stopAlarm(PendingIntent pendingIntent) {
+        AlarmManager am = (AlarmManager) ContextVal.getContext().getSystemService(Context.ALARM_SERVICE);
+        am.cancel(pendingIntent);
+    }
+
     private static void registerProxyReceiver(String proxyAction) {
         ContextVal.getContext().registerReceiver(proxyReceiver, new IntentFilter(proxyAction));
     }
 
     private static void setAlarm(long startTime, PendingIntent pendingIntent) {
         AlarmManager am = (AlarmManager) ContextVal.getContext().getSystemService(Context.ALARM_SERVICE);
-        am.setExact(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+        if (Build.VERSION.SDK_INT >= 23) {
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+        } else {
+            am.setExact(AlarmManager.RTC_WAKEUP, startTime, pendingIntent);
+        }
     }
 }

@@ -101,6 +101,12 @@ public class VcDialog extends AppCompatDialogFragment implements IVCDialog {
     }
 
     @Override
+    public IVCDialog cancelableByBackKey(boolean cancelable) {
+        setCancelable(cancelable);
+        return this;
+    }
+
+    @Override
     public void onCancel(DialogInterface dialog) {
         if (onCancelListener != null) {
             onCancelListener.onCancel(dialog);

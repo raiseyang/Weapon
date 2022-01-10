@@ -39,7 +39,7 @@ dependencies {
     implementation project(path: ':weapon-ui')
 }
 
-apply from: 'bintray.gradle'
+//apply from: 'bintray.gradle'
 
 ext {
     PUBLISH_GROUP_ID = 'com.raise.weapon'

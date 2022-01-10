@@ -1,21 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = "1.4.21"
+    ext.kotlin_version = "1.6.10"
     repositories {
-        // 链接本地nexus服务器
-        maven {
-            setAllowInsecureProtocol(true)
-            url "http://localhost:8081/repository/maven2_group_raise/"
-        }
+//        // 链接本地nexus服务器
+//        maven {
+//            setAllowInsecureProtocol(true)
+//            url "http://localhost:8081/repository/maven2_group_raise/"
+//        }
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
         // 配置相关插件
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -28,23 +28,23 @@ ext {
     weapon_version_name = "0.0.$weapon_version_code"
 
     junit_version = "4.12"
-    annotation_version = "1.1.0"
-    appcompat_version = "1.2.0"
+    annotation_version = "1.2.0"
+    appcompat_version = "1.4.0"
 
-    compileSdkVersion = 30// android11
+    compileSdkVersion = 31// android11
     minSdkVersion = 21 // android5.0
-    targetSdkVersion = 30// android11
+    targetSdkVersion = 31// android11
 }
 
 allprojects {
     repositories {
         // 链接本地nexus服务器
-        maven {
-            setAllowInsecureProtocol(true)
-            url "http://localhost:8081/repository/maven2_group_raise/"
-        }
+//        maven {
+//            setAllowInsecureProtocol(true)
+//            url "http://localhost:8081/repository/maven2_group_raise/"
+//        }
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 

@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.weapon_version_code
         versionName rootProject.ext.weapon_version_name
         manifestPlaceholders = [
@@ -50,7 +50,7 @@ dependencies {
     implementation "androidx.annotation:annotation:$annotation_version"
 }
 
-apply from: 'bintray.gradle'
+//apply from: 'bintray.gradle'
 
 ext {
     PUBLISH_GROUP_ID = 'com.raise.weapon'

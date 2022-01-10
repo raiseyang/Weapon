@@ -70,6 +70,17 @@ public class VcDialog extends AppCompatDialogFragment implements IVCDialog {
         return mDialog;
     }
 
+    /**
+     * 替换默认的原生dialog
+     *
+     * 自定义Fragment持有的Dialog对象
+     * 注意：使用该接口，请先了解其功能
+     * @param newDialog
+     */
+    public void replaceRawDialog(Dialog newDialog) {
+        mDialog = newDialog;
+    }
+
     public boolean isShowing() {
         return mDialog != null && mDialog.isShowing();
     }
@@ -262,7 +273,7 @@ public class VcDialog extends AppCompatDialogFragment implements IVCDialog {
             setupView(dialog.getWindow());
 
             dialog.setCanceledOnTouchOutside(cancelable);
-
+            
             VcDialog dialog = new VcDialog();
 //            Bundle bundle = new Bundle();
 //            bundle.putParcelable(KEY_ARG_BUILD, this);

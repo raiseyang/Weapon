@@ -44,7 +44,7 @@ dependencies {
     implementation project(path: ':weapon-base-kt')
     implementation project(path: ':weapon-ui')
     implementation project(path: ':weapon-ui-kt')
-//    implementation project(path: ':weapon-jetpack-kt')
+    implementation project(path: ':weapon-jetpack-kt')
 
 //    implementation 'com.raise.weapon:base:0.0.4'
 //    implementation 'com.raise.weapon:base_kt:0.0.4'

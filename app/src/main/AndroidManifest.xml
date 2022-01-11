@@ -10,6 +10,9 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.Weapon">
         <activity
+            android:name=".aboutme.AboutMeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

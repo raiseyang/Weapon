@@ -2,6 +2,6 @@ include ':weapon-ui-kt'
 include ':weapon-ui'
 include ':weapon-base-kt'
 include ':weapon-base'
-//include ':weapon-jetpack-kt'
+include ':weapon-jetpack-kt'
 include ':app'
 rootProject.name = "Weapon"

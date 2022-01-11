@@ -1,7 +1,9 @@
 package com.raise.weapon
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.raise.weapon.aboutme.AboutMeActivity
 import com.raise.weapon_base.LLog
 import com.raise.weapon_ui_kt.showVcDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,23 +20,18 @@ class MainActivity : AppCompatActivity() {
 
         btn_2.text = "btn_2"
         btn_2.setOnClickListener {
-            val showVcDialog = showVcDialog(this, false) {
+
+            val showVcDialog = showVcDialog {
                 setMessage("登录中")
-                setCancelable(false)
+                setCancelable(true)
             }
-                .cancelableByBackKey(false)
-                .show()
+                .cancelableByBackKey(true)
+            LLog.d(TAG, "onCreate() vcDialog=$showVcDialog")
         }
 
         btn_1.text = "btn_1"
         btn_1.setOnClickListener {
-            val showVcDialog = showVcDialog(this, false) {
-                setMessage("登录中")
-                setCancelable(true)
-            }
-
-            showVcDialog.show()
-            LLog.d("MainActivity","hello")
+            startActivity(Intent(this, AboutMeActivity::class.java))
         }
     }
 }

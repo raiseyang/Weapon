@@ -7,24 +7,19 @@ buildscript {
 //            setAllowInsecureProtocol(true)
 //            url "http://localhost:8081/repository/maven2_group_raise/"
 //        }
+        mavenLocal()
         google()
         mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
-        // 配置相关插件
-//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
-//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
     }
 }
 
 ext {
     // 版本发布时修改
-    weapon_version_code = 4
+    weapon_version_code = 5
     weapon_version_name = "0.0.$weapon_version_code"
 
     junit_version = "4.12"
@@ -38,11 +33,12 @@ ext {
 
 allprojects {
     repositories {
-        // 链接本地nexus服务器
+//        // 链接本地nexus服务器
 //        maven {
 //            setAllowInsecureProtocol(true)
 //            url "http://localhost:8081/repository/maven2_group_raise/"
 //        }
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -51,13 +47,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-// 执行该任务，自动发布到bintray上
-task jcenterPublish {
-
-}
-
-jcenterPublish.finalizedBy("weapon-base:install", "weapon-base:bintrayUpload")
-jcenterPublish.finalizedBy("weapon-base-kt:install", "weapon-base-kt:bintrayUpload")
-jcenterPublish.finalizedBy("weapon-ui:install", "weapon-ui:bintrayUpload")
-jcenterPublish.finalizedBy("weapon-ui-kt:install", "weapon-ui-kt:bintrayUpload")

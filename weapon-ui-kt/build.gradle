@@ -39,12 +39,10 @@ dependencies {
     implementation project(path: ':weapon-ui')
 }
 
-//apply from: 'bintray.gradle'
-
 ext {
     PUBLISH_GROUP_ID = 'com.raise.weapon'
     PUBLISH_VERSION = "${weapon_version_name}"
-    PUBLISH_ARTIFACT_ID = 'base_ui_kt'
+    PUBLISH_ARTIFACT_ID = 'base-ui-kt'
 }
 
 apply from: "../publish-module.gradle"

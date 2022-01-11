@@ -50,8 +50,6 @@ dependencies {
     implementation "androidx.annotation:annotation:$annotation_version"
 }
 
-//apply from: 'bintray.gradle'
-
 ext {
     PUBLISH_GROUP_ID = 'com.raise.weapon'
     PUBLISH_VERSION = "${weapon_version_name}"

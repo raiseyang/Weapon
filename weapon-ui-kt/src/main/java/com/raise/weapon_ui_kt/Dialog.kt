@@ -28,6 +28,9 @@ fun FragmentActivity.showVcDialog(
     return vcDialog
 }
 
+/**
+ * 使用VcDialog接口，显示Material Dialog
+ */
 fun FragmentActivity.showMaterialDialog(
     show: Boolean = true,
     block: IBuilder.() -> Unit

@@ -42,7 +42,7 @@ dependencies {
 ext {
     PUBLISH_GROUP_ID = 'com.raise.weapon'
     PUBLISH_VERSION = "${weapon_version_name}"
-    PUBLISH_ARTIFACT_ID = 'base-kt'
+    PUBLISH_ARTIFACT_ID = 'weapon-base-kt'
 }
 
 apply from: "../publish-module.gradle"

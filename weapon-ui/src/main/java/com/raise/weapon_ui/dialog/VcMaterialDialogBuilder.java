@@ -16,7 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
  */
 public class VcMaterialDialogBuilder implements IBuilder {
 
-    private FragmentActivity context;
+    private final FragmentActivity context;
 
     private String title;
     private String message;
@@ -133,7 +133,7 @@ public class VcMaterialDialogBuilder implements IBuilder {
             materialAlertDialogBuilder.setNegativeButton(leftBtnText, leftBtnOnClickListener);
         }
         if (!TextUtils.isEmpty(centerBtnText)) {
-            materialAlertDialogBuilder.setNegativeButton(centerBtnText, centerBtnOnClickListener);
+            materialAlertDialogBuilder.setNeutralButton(centerBtnText, centerBtnOnClickListener);
         }
         if (!TextUtils.isEmpty(rightBtnText)) {
             materialAlertDialogBuilder.setPositiveButton(rightBtnText, rightBtnOnClickListener);

@@ -3,6 +3,12 @@ plugins {
     id 'kotlin-android'
 }
 
+ext {
+    PUBLISH_ARTIFACT_ID = 'weapon-base-kt'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -38,11 +44,3 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(path: ':weapon-base')
 }
-
-ext {
-    PUBLISH_GROUP_ID = 'com.raise.weapon'
-    PUBLISH_VERSION = "${weapon_version_name}"
-    PUBLISH_ARTIFACT_ID = 'weapon-base-kt'
-}
-
-apply from: "../publish-module.gradle"

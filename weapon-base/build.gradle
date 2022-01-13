@@ -2,6 +2,12 @@ plugins {
     id 'com.android.library'
 }
 
+ext {
+    PUBLISH_ARTIFACT_ID = 'weapon-base'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
 android {
     compileSdk rootProject.ext.compileSdkVersion
 
@@ -49,11 +55,3 @@ android {
 dependencies {
     implementation "androidx.annotation:annotation:$annotation_version"
 }
-
-ext {
-    PUBLISH_GROUP_ID = 'com.raise.weapon'
-    PUBLISH_VERSION = "${weapon_version_name}"
-    PUBLISH_ARTIFACT_ID = 'weapon-base'
-}
-
-apply from: "../publish-module.gradle"

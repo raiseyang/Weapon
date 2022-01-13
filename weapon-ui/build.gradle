@@ -2,6 +2,12 @@ plugins {
     id 'com.android.library'
 }
 
+ext {
+    PUBLISH_ARTIFACT_ID = 'weapon-ui'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -41,13 +47,5 @@ dependencies {
     api "androidx.annotation:annotation:$annotation_version"
     api "androidx.appcompat:appcompat:$appcompat_version"
     api 'com.google.android.material:material:1.4.0'
-    implementation project(path: ':weapon-base')
+    api project(path: ':weapon-base')
 }
-
-ext {
-    PUBLISH_GROUP_ID = 'com.raise.weapon'
-    PUBLISH_VERSION = "${weapon_version_name}"
-    PUBLISH_ARTIFACT_ID = 'weapon-ui'
-}
-
-apply from: "../publish-module.gradle"

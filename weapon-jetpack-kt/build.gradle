@@ -3,6 +3,12 @@ plugins {
     id 'kotlin-android'
 }
 
+ext {
+    PUBLISH_ARTIFACT_ID = 'weapon-jetpack-kt'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -61,13 +67,3 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
 }
-
-//apply from: 'bintray.gradle'
-
-ext {
-    PUBLISH_GROUP_ID = 'com.raise.weapon'
-    PUBLISH_VERSION = "${weapon_version_name}"
-    PUBLISH_ARTIFACT_ID = 'base-jetpack-kt'
-}
-
-apply from: "../publish-module.gradle"

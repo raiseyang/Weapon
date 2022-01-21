@@ -40,12 +40,17 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    implementation 'io.github.raiseyang:weapon-base:0.0.6'
+    def weapon_version = '0.1.0'
+    implementation "io.github.raiseyang:weapon-base:$weapon_version"
+    implementation "io.github.raiseyang:weapon-ui:$weapon_version"
+    implementation "io.github.raiseyang:weapon-base-kt:$weapon_version"
+    implementation "io.github.raiseyang:weapon-ui-kt:$weapon_version"
+    implementation "io.github.raiseyang:weapon-jetpack-kt:$weapon_version"
 //    implementation project(path: ':weapon-base')
-    implementation project(path: ':weapon-base-kt')
-    implementation project(path: ':weapon-ui')
-    implementation project(path: ':weapon-ui-kt')
-    implementation project(path: ':weapon-jetpack-kt')
+//    implementation project(path: ':weapon-base-kt')
+//    implementation project(path: ':weapon-ui')
+//    implementation project(path: ':weapon-ui-kt')
+//    implementation project(path: ':weapon-jetpack-kt')
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
